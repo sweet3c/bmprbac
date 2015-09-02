@@ -31,3 +31,26 @@ review the [guidelines for contributing](CONTRIBUTING.md).
 ## License
 
 Yii2-rbac is released under the MIT License. See the bundled [LICENSE](LICENSE) for details.
+
+使用方法：
+1.首选需要修改配置文件main.php
+
+在modules添加如下信息：
+    'modules' => [
+        'rbac' => [
+            'class' => 'bmprbac\rbac\Module',
+            'rbacCheck' => false, //是否开启RBAC验证
+            'allowed' => ['sitelogin', 'siteindex', 'siteerror', 'sitecaptcha'],//始终允许的操作格式为controlleraction
+        ],
+        'debug' => [
+            'class' => 'yii\debug\Module',
+        ],
+    ],
+
+在components中添加：
+    'authManager' => [
+        'class' => 'bmprbac\rbac\components\DbManager',
+    ],
+
+
+具体如何使用：
