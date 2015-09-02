@@ -36,6 +36,7 @@ Yii2-rbac is released under the MIT License. See the bundled [LICENSE](LICENSE) 
 1.首选需要修改配置文件main.php
 
 在modules添加如下信息：
+
     'modules' => [
         'rbac' => [
             'class' => 'bmprbac\rbac\Module',
@@ -48,9 +49,11 @@ Yii2-rbac is released under the MIT License. See the bundled [LICENSE](LICENSE) 
     ],
 
 在components中添加：
+
     'authManager' => [
         'class' => 'bmprbac\rbac\components\DbManager',
     ],
-
+    
 
 具体如何使用：
+
