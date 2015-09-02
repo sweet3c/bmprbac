@@ -54,6 +54,7 @@ Yii2-rbac is released under the MIT License. See the bundled [LICENSE](LICENSE) 
         'class' => 'bmprbac\rbac\components\DbManager',
     ],
     
+执行根目录下的RBAC.sql建表,如需修改，可自行修改并修改代码。
 
 具体如何使用：
 
