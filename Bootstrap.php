@@ -19,7 +19,7 @@ use yii\base\BootstrapInterface;
 
 /**
  * Bootstrap class registers translations and needed application components.
- * @author Dmitry Erofeev <dmeroff@gmail.com>
+ * @author xupeng Li <740942943@qq.com>
  */
 class Bootstrap implements BootstrapInterface
 {

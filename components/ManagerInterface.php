@@ -14,7 +14,7 @@ namespace bmprbac\rbac\components;
 use yii\rbac\ManagerInterface as BaseManagerInterface;
 
 /**
- * @author Dmitry Erofeev <dmeroff@gmail.com>
+ * @author xupeng Li <740942943@qq.com>
  */
 interface ManagerInterface extends BaseManagerInterface
 {

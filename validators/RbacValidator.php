@@ -14,7 +14,7 @@ namespace bmprbac\rbac\validators;
 use yii\validators\Validator;
 
 /**
- * @author Dmitry Erofeev <dmeroff@gmail.com>
+ * @author xupeng Li <740942943@qq.com>
  */
 class RbacValidator extends Validator
 {
