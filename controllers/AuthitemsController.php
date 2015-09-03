@@ -32,7 +32,7 @@ class AuthitemsController extends BaseController
         // $this->performAjaxValidation($model);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->name]);
+            return $this->redirect(['view', 'id' => $model->item_name]);
         }
 
         return $this->render('/rbac/authitems/update', [
@@ -78,7 +78,7 @@ class AuthitemsController extends BaseController
     {
         $model = $this->findModel($id);
         $model->delete();
-        if ($model->allowed == models\RbacAuthitems::ALLOWS) {
+        if ($model->allowed == models\RbacAuthitems::ALLOWED) {
             models\RbacAuthitems::getAllowedAccess(false);
         }
         return $this->redirect(['/rbac/authitems/index']);
@@ -274,7 +274,7 @@ class AuthitemsController extends BaseController
 
         $model = new models\RbacTaskItems();
         $model->scenario = 'search';
-        $dataProvider = $model->search([$model->formName() => ['authitems_name' => $authitemsObj->name]]);
+        $dataProvider = $model->search([$model->formName() => ['authitems_name' => $authitemsObj->item_name]]);
         return $this->render('/rbac/authitems/relatedTask', [
             'authitemsObj' => $authitemsObj,
             'dataProvider' => $dataProvider

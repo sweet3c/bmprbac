@@ -32,10 +32,10 @@ $this->params['breadcrumbs'][] = $model->task_id;
                         'label' => '角色描述',
                         'value' => Html::encode($model->description),
                     ],
-                    [
-                        'label' => '任务规则',
-                        'value' => Html::encode($model->bizrule),
-                    ],
+//                    [
+//                        'label' => '任务规则',
+//                        'value' => Html::encode($model->bizrule),
+//                    ],
                 ],
             ]) ?>
 

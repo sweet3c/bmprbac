@@ -148,7 +148,7 @@ class RbacRole extends ActiveRecord
     {
         if (is_array($userIds)) {
 
-            $relatedUserList = $model->getUserIdsByUserId($roleId);
+            $relatedUserList = $model->getUserIdsByRoleId($roleId);
             //获取已关联角色的用户ID和本次选择的用户ID取差集 即为添加的用户Id
             $userAddIds = array_diff($userIds, $relatedUserList);
             if (empty($userAddIds)) {

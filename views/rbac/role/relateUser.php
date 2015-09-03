@@ -13,7 +13,9 @@ $this->title = '授权角色管理';
 $this->params['breadcrumbs'][] = ['label' => '授权角色管理', 'url' => ['index']];
 $this->params['breadcrumbs'][] = '关联用户';
 
+$asset = bmprbac\rbac\RbacAsset::register($this);
 ?>
+<input type="hidden" id="roleRelatedUserIds" value="<?= implode(',', $model->getUserIdsByRoleId($roleModel->role_id));?>">
 <div class="row">
     <div class="col-sm-12">
         <div class="box box-primary">
@@ -62,8 +64,7 @@ $this->params['breadcrumbs'][] = '关联用户';
                         [
                             'class' => \yii\grid\CheckboxColumn::className(),
                             'checkboxOptions' => function ($dataProvider, $key, $index, $column) {
-                                $checked = in_array($dataProvider->user_id, $dataProvider->getUserIdsByUserId(Yii::$app->user->id)) ? true : false;
-                                return ['value' => $dataProvider->user_id, 'checked' => $checked];
+                                return ['value' => $dataProvider->user_id];
                              },
                         ],
                         'user_code',

@@ -10,29 +10,29 @@ use yii\widgets\DetailView;
 
 $this->title = '授权项目管理';
 $this->params['breadcrumbs'][] = ['label' => '授权项目管理', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $model->name;
+$this->params['breadcrumbs'][] = $model->item_name;
 ?>
 <div class="box box-info">
     <div class="box-body">
         <div class="col-sm-10">
 
-            <h3><?= Html::encode('查看权限#' . $model->name) ?></h3>
+            <h3><?= Html::encode('查看权限#' . $model->item_name) ?></h3>
 
             <?= DetailView::widget([
                 'model' => $model,
                 'attributes' => [
-                    'name',
+                    'item_name',
                     'module',
                     'controller',
                     'action',
                     'description',
                     [
-                        'label' => '权限类型',
+                        'attribute' => 'type',
                         'value' => isset(\bmprbac\rbac\models\RbacAuthitems::$types[$model->type]) ? \bmprbac\rbac\models\RbacAuthitems::$types[$model->type] : '',
                     ],
                     [
-                        'label' => '总是允许',
-                        'value' => isset($model->allowType[$model->allowed]) ? $model->allowType[$model->allowed] : '',
+                        'attribute' => 'allowed',
+                        'value' => isset($model->allowTypes[$model->allowed]) ? $model->allowTypes[$model->allowed] : '',
                     ],
                     'bizrule',
                     'data',
@@ -40,8 +40,8 @@ $this->params['breadcrumbs'][] = $model->name;
             ]) ?>
 
             <p>
-                <?= Html::a('编辑', ['update', 'id' => $model->name], ['class' => 'btn btn-primary']) ?>
-                <?= Html::a('删除', ['delete', 'id' => $model->name], [
+                <?= Html::a(Yii::t('rbac', 'edit'), ['update', 'id' => $model->item_name], ['class' => 'btn btn-primary']) ?>
+                <?= Html::a(Yii::t('rbac','delete'), ['delete', 'id' => $model->item_name], [
                     'class' => 'btn btn-danger',
                     'data' => [
                         'confirm' => '你确定删除此权限吗?',

@@ -27,18 +27,18 @@ $this->params['breadcrumbs'][] = '授权角色管理';
                 ?>
                 <table class="table table-bordered table-hover">
                     <tbody>
-                    <tr data-key="5">
+                    <tr>
                         <td>
                             <?= $form->field($model, 'role_name')->textInput(['maxlength' => 45]); ?>
                         </td>
                         <td>
                             <?= $form->field($model, 'status')->dropDownList($model->roleStatusParams); ?>
                         </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
+                        <td>
                             <?= Html::submitButton('搜索', ['class' => 'btn btn-default', 'name' => 'submit-button']) ?>
-
+                        </td>
+                        <td>
+                            <?= Html::a('创建角色', ['create'], ['class' => 'btn btn-success']) ?>
                         </td>
                     </tr>
                     </tbody>
@@ -48,9 +48,6 @@ $this->params['breadcrumbs'][] = '授权角色管理';
 
         </div>
         <div class="box">
-            <div class="box-header with-border">
-                <?= Html::a('创建角色', ['create'], ['class' => 'btn btn-success']) ?>
-            </div>
             <div class="box-body">
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,

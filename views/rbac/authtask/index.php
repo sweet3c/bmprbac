@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = '授权任务管理';
                             },
                         ],
                         'description',
-                        'bizrule',
+//                        'bizrule',
                         [
                             'header' => '操作',
                             'class' => 'yii\grid\ActionColumn',

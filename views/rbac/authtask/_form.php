@@ -23,12 +23,10 @@ use yii\bootstrap\ActiveForm;
 
     <?= $form->field($model, 'task_name')->textInput(['maxlength' => 64]) ?>
 
-    <?= $form->field($model, 'description')->textarea(['maxlength' => 200]) ?>
-
     <?= $form->field($model, 'task_category_id')->dropDownList(\bmprbac\rbac\models\RbacTaskCategory::getCategories(),
         ['prompt' => '全部类型']); ?>
-    <?= $form->field($model, 'bizrule')->textarea(['maxlength' => 200]) ?>
 
+    <?= $form->field($model, 'description')->textarea(['maxlength' => 200]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? '创建' : '保存',

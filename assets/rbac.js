@@ -83,11 +83,23 @@ yii.bmprbac = (function ($) {
         });
     };
 
+    //角色已关联用户选中
+    var initRelatedUserSelectAll = function () {
+        if (undefined !== $("#roleRelatedUserIds").val()) {
+            var user_ids = $("#roleRelatedUserIds").val();
+            var user_ids_arr = user_ids.split(',');
+            $(":checkbox[name='selection[]']").each(function () {
+                if ($.inArray($(this).val(), user_ids_arr) != -1) $(this).attr('checked', true);
+            });
+        }
+    };
+
     return {
         init: function () {
             initAuthItems();
             initSelectAll();
             intiAssignTask();
+            initRelatedUserSelectAll();
         }
     }
 

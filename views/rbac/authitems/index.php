@@ -26,26 +26,23 @@ $this->params['breadcrumbs'][] = '授权项目管理';
                     'encodeErrorSummary' => false,
                 ]);
                 ?>
-                <table class="table table-bordered table-hover">
-                    <tbody>
-                    <tr data-key="5">
-                        <td>
-                            <?= $form->field($model, 'name')->textInput(['maxlength' => 64]); ?>
-                        </td>
-                        <td>
-                            <?= $form->field($model,
-                                'type')->dropDownList(\bmprbac\rbac\models\RbacAuthitems::$types,
-                                ['prompt' => '全部权限类型']); ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <?= Html::submitButton('搜索', ['class' => 'btn btn-default', 'name' => 'submit-button']) ?>
+                <div class="form-group">
+                    <?= $form->field($model, 'item_name')
+                        ->inline()
+                        ->label(false) // 不显示label（input前面的字段名，只使用placeholder来显示字段名）
+                        ->error(false) // 不在input下方显示该field的错误信息（显示错误信息会在input下方增加一个显示错误信息的<p></p>）
+                        ->textInput(['maxlength' => 10, 'placeholder' => $model->getAttributeLabel('item_name')]); ?>
+                </div>
 
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div class="form-group">
+                    <?= $form->field($model, 'type')
+                        ->inline()
+                        ->label(false)
+                        ->error(false)
+                        ->dropDownList(\bmprbac\rbac\models\RbacAuthitems::$types,
+                        ['prompt' => '全部权限类型']); ?>
+                </div>
+                <?= Html::submitButton('搜索', ['class' => 'btn btn-default', 'item_name' => 'submit-button']) ?>
                 <?php ActiveForm::end(); ?>
             </div>
         </div>
@@ -57,18 +54,18 @@ $this->params['breadcrumbs'][] = '授权项目管理';
                     'tableOptions' => ['class' => 'table table-bordered table-hover'],
                     'layout' => "{items}<div class='col-sm-5'>{summary}</div><div class='col-sm-7'><div class='dataTables_paginate'>{pager}</div></div>",
                     'columns' => [
-                        'name',
+                        'item_name',
                         'description',
                         [
-                            'label' => '权限类型',
+                            'attribute' => 'type',
                             'value' => function ($model) {
                                 return isset(\bmprbac\rbac\models\RbacAuthitems::$types[$model->type]) ? \bmprbac\rbac\models\RbacAuthitems::$types[$model->type] : '';
                             },
                         ],
                         [
-                            'label' => '总是允许',
+                            'attribute' => 'allowed',
                             'value' => function ($model) {
-                                return isset($model->allowType[$model->allowed]) ? $model->allowType[$model->allowed] : '';
+                                return isset($model->allowTypes[$model->allowed]) ? $model->allowTypes[$model->allowed] : '';
                             },
                         ],
                         [

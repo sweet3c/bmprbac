@@ -21,7 +21,7 @@ use yii\bootstrap\ActiveForm;
     ]); ?>
     <?= $form->errorSummary($model);?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => 64, 'readonly' => true]) ?>
+    <?= $form->field($model, 'item_name')->textInput(['maxlength' => 64, 'readonly' => true]) ?>
 
     <?= $form->field($model, 'controller')->textInput(['maxlength' => 50]) ?>
 
@@ -29,9 +29,9 @@ use yii\bootstrap\ActiveForm;
 
     <?= $form->field($model, 'description')->textarea(['maxlength' => 45]) ?>
 
-    <?= $form->field($model, 'type')->radioList(\bmprbac\rbac\models\RbacAuthitems::$types) ?>
+    <?= $form->field($model, 'type')->inline()->radioList(\bmprbac\rbac\models\RbacAuthitems::$types) ?>
 
-    <?= $form->field($model, 'allowed')->radioList($model->allowType) ?>
+    <?= $form->field($model, 'allowed')->inline()->radioList($model->allowTypes) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? '创建' : '保存',

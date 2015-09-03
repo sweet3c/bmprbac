@@ -12,7 +12,7 @@ use yii\web\Controller;
 /**
  * This is the model class for table "rbac_authitems".
  *
- * @property string $name
+ * @property string $item_name
  * @property string $module
  * @property string $controller
  * @property string $action
@@ -25,12 +25,13 @@ use yii\web\Controller;
 class RbacAuthitems extends ActiveRecord
 {
 
-    public static $types = ['operation' => '操作', 'data' => '数据', 'custom' => '自定义'];
-    const UNALLOW = 0; //不允许
-    const ALLOWS = 1;  //始终允许
-    public $allowType = [
-        self::UNALLOW => '否',
-        self::ALLOWS => '是',
+    public static $types = ['operation' => '操作'];
+    const NOTALLOWED = 0; //不允许
+    const ALLOWED = 1;  //始终允许
+
+    public $allowTypes = [
+        self::NOTALLOWED => '否',
+        self::ALLOWED => '是',
     ];
     private static $_allowedAccess;
 
@@ -47,7 +48,7 @@ class RbacAuthitems extends ActiveRecord
     {
         $scenarios = parent::scenarios();
         $scenarios['create'] = [
-            'name',
+            'item_name',
             'type',
             'allowed',
             'controller',
@@ -58,7 +59,7 @@ class RbacAuthitems extends ActiveRecord
             'data'
         ];
         $scenarios['update'] = [
-            'name',
+            'item_name',
             'type',
             'allowed',
             'controller',
@@ -68,7 +69,7 @@ class RbacAuthitems extends ActiveRecord
             'bizrule',
             'data'
         ];
-        $scenarios['search'] = ['name', 'type'];
+        $scenarios['search'] = ['item_name', 'type'];
         return $scenarios;
     }
 
@@ -78,10 +79,10 @@ class RbacAuthitems extends ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required', 'on' => ['create', 'update']],
+            [['item_name'], 'required', 'on' => ['create', 'update']],
             [['type'], 'string'],
             [['allowed'], 'integer'],
-            [['name'], 'string', 'max' => 64],
+            [['item_name'], 'string', 'max' => 64],
             [['module', 'controller'], 'string', 'max' => 50],
             [['action', 'description'], 'string', 'max' => 45],
             [['bizrule', 'data'], 'string', 'max' => 200]
@@ -94,7 +95,7 @@ class RbacAuthitems extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'name' => '权限名',
+            'item_name' => '权限名',
             'module' => '模块儿',
             'controller' => '控制器',
             'action' => '权限标识名-操作',
@@ -113,7 +114,7 @@ class RbacAuthitems extends ActiveRecord
     public static function getCanAssignItems()
     {
         $rows = (new \yii\db\Query())
-            ->select(['name'])
+            ->select(['item_name'])
             ->from(self::tableName())
             ->where('allowed = :allowed', [':allowed' => 0])
             ->column();
@@ -139,7 +140,7 @@ class RbacAuthitems extends ActiveRecord
         $query->andFilterWhere([
             'type' => $this->type,
         ]);
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'item_name', $this->item_name]);
         return $dataProvider;
     }
 
@@ -203,8 +204,10 @@ class RbacAuthitems extends ActiveRecord
 
     /**
      * 检查Controller是否继承于BaseController
-     * @param string $controller
+     *
      * @author lixupeng
+     * @param string $controller
+     * @return boolean
      */
     private static function _extendsBaseController($controller, $module)
     {
@@ -233,12 +236,12 @@ class RbacAuthitems extends ActiveRecord
     {
         $actions = [];
         $rows = (new \yii\db\Query())
-            ->select(['name', 'action'])
+            ->select(['item_name', 'action'])
             ->from(self::tableName())
             ->where('controller=:controller and module=:module', [':controller' => $controller, 'module' => $module])
             ->all();
         foreach ($rows as $row) {
-            $actions[$row['name']] = $row['action'];
+            $actions[$row['item_name']] = $row['action'];
         }
         return $actions;
     }
@@ -260,7 +263,7 @@ class RbacAuthitems extends ActiveRecord
                 array_push($values, $temp);
             }
             $result = \Yii::$app->db->createCommand()->batchInsert(self::tableName(),
-                ['name', 'module', 'controller', 'action', 'type', 'allowed'], $values)->execute();
+                ['item_name', 'module', 'controller', 'action', 'type', 'allowed'], $values)->execute();
             if ($result) {
                 // 如果有始终允许的授权项，则更新一下其缓存
                 if ($allowed) {
@@ -281,11 +284,13 @@ class RbacAuthitems extends ActiveRecord
      */
     public static function getUserOperationAuthItems($userId, $useCache = true)
     {
+        //获取RBAC权限使用的cache名字
+        $cacheTypeName = Yii::$app->getModule('rbac')->cacheTypeName;
         $cachekey = 'UserAuthItems_userId_' . $userId;
         $items = [];//所有权限
         // 如果使用cache优先从cache读取
         if ($useCache) {
-            $items = Yii::$app->cache->get($cachekey);
+            $items = Yii::$app->$cacheTypeName->get($cachekey);
         }
 
         // 如果未使用cache或从cache中未读出值，则到数据库读取，并缓存起来。
@@ -305,46 +310,48 @@ class RbacAuthitems extends ActiveRecord
             foreach ($authItems as $v) {
                 $items[$v] = $v;
             }
-            Yii::$app->cache->set($cachekey, $items, 1800);
+            Yii::$app->$cacheTypeName->set($cachekey, $items, 1800);
         }
 
         return $items;
     }
 
     /**
-     * 获取永久允许的操作名称列表数组，以name做为键值
+     * 获取永久允许的操作名称列表数组，以item_name做为键值
      * 永久缓存，直到不使用缓存查询时才从数据库读取并缓存起来
      * @param  boolean $useCache
      * @return array
      */
     public static function getAllowedAccess($useCache = true)
     {
+        //获取RBAC权限使用的cache名字
+        $cacheTypeName = Yii::$app->getModule('rbac')->cacheTypeName;
         $cachekey = 'allowedAccess';
         // 如果使用cache优先从cache读取
         if ($useCache) {
             if (self::$_allowedAccess === null) {
                 $components = Yii::$app->getComponents();
-                if (!in_array('cache', array_keys($components))) {
+                if (!in_array($cacheTypeName, array_keys($components))) {
                     throw new Exception(Yii::t('rbac',
                         "Modules [rbac] used cache, but application not exists cache component.",
                         array('{extension}' => 'rbac')));
                 }
-                self::$_allowedAccess = Yii::$app->cache->get($cachekey);
+                self::$_allowedAccess = Yii::$app->$cacheTypeName->get($cachekey);
             }
         }
         // 如果未使用cache或从cache中未读出值，则到数据库读取，并缓存起来。
         if (!$useCache || self::$_allowedAccess === false) {
             $rows = (new \yii\db\Query())
-                ->select(['name'])
+                ->select(['item_name'])
                 ->from(self::tableName())
-                ->where('allowed = :allowed and type = :type', [':allowed' => self::ALLOWS, ':type' => 'operation'])
+                ->where('allowed = :allowed and type = :type', [':allowed' => self::ALLOWED, ':type' => 'operation'])
                 ->column();
             $allowedAccess = array();
             foreach ($rows as $v) {
                 $allowedAccess[$v] = $v;
             }
             self::$_allowedAccess = $allowedAccess;
-            Yii::$app->cache->set($cachekey, $allowedAccess, 0);
+            Yii::$app->$cacheTypeName->set($cachekey, $allowedAccess, 0);
         }
 
         return self::$_allowedAccess;
@@ -367,7 +374,7 @@ class RbacAuthitems extends ActiveRecord
         );
         // 再删除授权项
         return self::deleteAll(
-            ['in', 'name', $names]
+            ['in', 'item_name', $names]
         );
     }
 
@@ -379,7 +386,7 @@ class RbacAuthitems extends ActiveRecord
     {
         $notExistAuthitems = [];
         $rows = (new \yii\db\Query())
-            ->select(['name', 'controller', 'action', 'module'])
+            ->select(['item_name', 'controller', 'action', 'module'])
             ->from(self::tableName())
             ->all();
         foreach ($rows as $row) {
@@ -389,11 +396,11 @@ class RbacAuthitems extends ActiveRecord
                 $c = "bmprbac\\rbac\controllers\\" . basename(str_replace(".php", "", $row['controller']));
             }
             if (!class_exists($c)) {
-                array_push($notExistAuthitems, $row['name']);
+                array_push($notExistAuthitems, $row['item_name']);
             } else {
                 $cont = new $c($c, null);
                 if (!method_exists($cont, 'action' . str_replace('-', '', $row['action']))) {
-                     array_push($notExistAuthitems, $row['name']);
+                     array_push($notExistAuthitems, $row['item_name']);
                 }
             }
 

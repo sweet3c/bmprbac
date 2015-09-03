@@ -11,7 +11,7 @@ use yii\grid\GridView;
 
 $this->title = '授权项目管理';
 $this->params['breadcrumbs'][] = ['label' => '授权项目管理', 'url' => ['index']];
-$this->params['breadcrumbs'][] = '授权项目：' . $authitemsObj->name . '的关联任务列表';
+$this->params['breadcrumbs'][] = '授权项目：' . $authitemsObj->item_name . '的关联任务列表';
 ?>
 <div class="row">
     <div class="col-sm-10">

@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $model->role_name . '的授权用户列表';
                         [
                             'label' => '在职状态',
                             'value' => function ($dataProvider) {
-                                return \app\models\user\User::getUserStatus($dataProvider->user->status);
+                                return $dataProvider->user->getUserStatus($dataProvider->user->status);
                             },
                         ],
                         [
