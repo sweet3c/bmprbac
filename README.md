@@ -9,6 +9,8 @@
 
 4.所有的controller只需要继承RbacBaseController即可判断该用户是否有访问这个页面的权限。
 
+5.可以指定使用那个cache来进行缓存权限数据
+
 
 
 ================================================
@@ -55,6 +57,7 @@ Yii2-rbac is released under the MIT License. See the bundled [LICENSE](LICENSE) 
         'rbac' => [
             'class' => 'bmprbac\rbac\Module',
             'rbacCheck' => false, //是否开启RBAC验证
+            'cacheTypeName' => 'cache', //RBAC使用缓存的名字
             'allowed' => ['sitelogin', 'siteindex', 'siteerror', 'sitecaptcha'],//始终允许的操作格式为controlleraction
         ],
         'debug' => [
@@ -66,6 +69,9 @@ Yii2-rbac is released under the MIT License. See the bundled [LICENSE](LICENSE) 
 
     'authManager' => [
         'class' => 'bmprbac\rbac\components\DbManager',
+    ],
+    'cache' => [
+        'class' => 'yii\caching\FileCache',
     ],
     
 执行根目录下的RBAC.sql建表,如需修改，可自行修改并修改代码。
