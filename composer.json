@@ -5,8 +5,8 @@
   "type": "yii2-extension",
   "license": "MIT",
   "support": {
-    "issues": "https://github.com/bmprbac/yii2-rbac/issues?state=open",
-    "source": "https://github.com/bmprbac/yii2-rbac"
+    "issues": "https://github.com/xupengli/bmprbac/issues?state=open",
+    "source": "https://github.com/xupengli/bmprbac"
   },
   "authors": [
     {
