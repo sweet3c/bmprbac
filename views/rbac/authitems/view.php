@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $model->item_name;
 ?>
 <div class="box box-info">
     <div class="box-body">
-        <div class="col-sm-10">
+        <div class="col-sm-12">
 
             <h3><?= Html::encode('查看权限#' . $model->item_name) ?></h3>
 
@@ -40,8 +40,8 @@ $this->params['breadcrumbs'][] = $model->item_name;
             ]) ?>
 
             <p>
-                <?= Html::a(Yii::t('rbac', 'edit'), ['update', 'id' => $model->item_name], ['class' => 'btn btn-primary']) ?>
-                <?= Html::a(Yii::t('rbac','delete'), ['delete', 'id' => $model->item_name], [
+                <?= Html::a(Yii::t('rbac', '编辑'), ['update', 'id' => $model->item_name], ['class' => 'btn btn-primary']) ?>
+                <?= Html::a(Yii::t('rbac','删除'), ['delete', 'id' => $model->item_name], [
                     'class' => 'btn btn-danger',
                     'data' => [
                         'confirm' => '你确定删除此权限吗?',
@@ -49,20 +49,6 @@ $this->params['breadcrumbs'][] = $model->item_name;
                     ],
                 ]) ?>
             </p>
-        </div>
-        <div class="col-sm-2">
-            <div class="box box-primary">
-                <div class="box-body">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">操作列表</h3>
-                    </div>
-                    <!-- /.box-header -->
-                    <ul>
-                        <li><a href='<?= Yii::$app->urlManager->createUrl(['rbac/authitems/autoscan']); ?>'>扫描权限</a></li>
-                        <li><a href='<?= Yii::$app->urlManager->createUrl(['rbac/authtask/category-admin']); ?>'>检测方法</a></li>
-                    </ul>
-                </div>
-            </div>
         </div>
     </div>
 </div>

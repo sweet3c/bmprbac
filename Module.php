@@ -34,6 +34,9 @@ class Module extends BaseModule
 
     //始终允许访问的权限
     public $allowed = [];
+
+    //RBAC使用缓存的名字
+    public $cacheComponents = 'cache';
     
     /** @inheritdoc */
 //    public function behaviors()

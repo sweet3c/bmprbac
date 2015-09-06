@@ -25,24 +25,25 @@ $this->params['breadcrumbs'][] = '授权角色管理';
                     'encodeErrorSummary' => false,
                 ]);
                 ?>
-                <table class="table table-bordered table-hover">
-                    <tbody>
-                    <tr>
-                        <td>
-                            <?= $form->field($model, 'role_name')->textInput(['maxlength' => 45]); ?>
-                        </td>
-                        <td>
-                            <?= $form->field($model, 'status')->dropDownList($model->roleStatusParams); ?>
-                        </td>
-                        <td>
-                            <?= Html::submitButton('搜索', ['class' => 'btn btn-default', 'name' => 'submit-button']) ?>
-                        </td>
-                        <td>
-                            <?= Html::a('创建角色', ['create'], ['class' => 'btn btn-success']) ?>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div class="form-group">
+                    <?= $form->field($model, 'role_name')
+                        ->inline()
+                        ->label(false) // 不显示label（input前面的字段名，只使用placeholder来显示字段名）
+                        ->error(false) // 不在input下方显示该field的错误信息（显示错误信息会在input下方增加一个显示错误信息的<p></p>）
+                        ->textInput(['maxlength' => 45, 'placeholder' => $model->getAttributeLabel('role_name')]); ?>
+                </div>
+
+                <div class="form-group">
+                    <?= $form->field($model, 'status')
+                        ->inline()
+                        ->label(false)
+                        ->error(false)
+                        ->dropDownList($model->roleStatusParams); ?>
+                </div>
+                <?= Html::submitButton('搜索', ['class' => 'btn btn-default', 'item_name' => 'submit-button']) ?>
+                <div style="float: right;">
+                    <?= Html::a('创建角色', ['create'], ['class' => 'btn btn-success']) ?>
+                </div>
                 <?php ActiveForm::end(); ?>
             </div>
 

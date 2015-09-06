@@ -59,7 +59,7 @@ class RbacBaseController extends \yii\web\Controller
          *  If so, redirect the user to the login page and after login return the user to the page they tried to open.
          *  If not, show the unautorizedacces message.
          */
-        if (!\Yii::$app->user->getIsGuest()) {
+        if (\Yii::$app->user->getIsGuest()) {
             \Yii::$app->user->loginRequired();
         } else {
             $mod = $this->module != null ? $this->module->id : '';

@@ -55,12 +55,12 @@ class RbacUserRole extends ActiveRecord
     public static function getUserRoles($userId, $useCache = true)
     {
         //获取RBAC权限使用的cache名字
-        $cacheTypeName = Yii::$app->getModule('rbac')->cacheTypeName;
+        $cacheComponents = Yii::$app->getModule('rbac')->cacheComponents;
         $cachekey = 'UserRole_userId_' . $userId;
         $roles = [];
         // 如果使用cache优先从cache读取
         if ($useCache) {
-            $roles = Yii::$app->$cacheTypeName->get($cachekey);
+            $roles = Yii::$app->$cacheComponents->get($cachekey);
         }
 
         // 如果未使用cache或从cache中未读出值，则到数据库读取，并缓存起来。
@@ -71,8 +71,8 @@ class RbacUserRole extends ActiveRecord
                 ->where('user_id = :user_id', [':user_id' => $userId])
                 ->column();
         }
-        Yii::$app->$cacheTypeName->set($cachekey, $roles);
-        $roles = Yii::$app->$cacheTypeName->get($cachekey);
+        Yii::$app->$cacheComponents->set($cachekey, $roles);
+        $roles = Yii::$app->$cacheComponents->get($cachekey);
         return $roles;
     }
 

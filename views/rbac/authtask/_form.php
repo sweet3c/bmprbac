@@ -10,7 +10,7 @@ use yii\bootstrap\ActiveForm;
 
 ?>
 
-<div class="col-sm-10">
+<div class="col-sm-12">
 
     <?php $form = ActiveForm::begin([
         'options' => ['class' => 'form-horizontal'],
@@ -35,18 +35,4 @@ use yii\bootstrap\ActiveForm;
 
     <?php ActiveForm::end(); ?>
 
-</div>
-<div class="col-sm-2">
-    <div class="box box-primary">
-        <div class="box-body">
-            <div class="box-header with-border">
-                <h3 class="box-title">操作列表</h3>
-            </div>
-            <!-- /.box-header -->
-            <ul>
-                <li><a href='<?= Yii::$app->urlManager->createUrl(['rbac/authtask/index']); ?>'>任务管理</a></li>
-                <li><a href='<?= Yii::$app->urlManager->createUrl(['rbac/authtask/category-admin']); ?>'>任务分类管理</a></li>
-            </ul>
-        </div>
-    </div>
 </div>

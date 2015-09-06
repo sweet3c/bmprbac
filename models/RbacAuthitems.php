@@ -285,12 +285,12 @@ class RbacAuthitems extends ActiveRecord
     public static function getUserOperationAuthItems($userId, $useCache = true)
     {
         //获取RBAC权限使用的cache名字
-        $cacheTypeName = Yii::$app->getModule('rbac')->cacheTypeName;
+        $cacheComponents = Yii::$app->getModule('rbac')->cacheComponents;
         $cachekey = 'UserAuthItems_userId_' . $userId;
         $items = [];//所有权限
         // 如果使用cache优先从cache读取
         if ($useCache) {
-            $items = Yii::$app->$cacheTypeName->get($cachekey);
+            $items = Yii::$app->$cacheComponents->get($cachekey);
         }
 
         // 如果未使用cache或从cache中未读出值，则到数据库读取，并缓存起来。
@@ -310,7 +310,7 @@ class RbacAuthitems extends ActiveRecord
             foreach ($authItems as $v) {
                 $items[$v] = $v;
             }
-            Yii::$app->$cacheTypeName->set($cachekey, $items, 1800);
+            Yii::$app->$cacheComponents->set($cachekey, $items, 1800);
         }
 
         return $items;
@@ -325,18 +325,18 @@ class RbacAuthitems extends ActiveRecord
     public static function getAllowedAccess($useCache = true)
     {
         //获取RBAC权限使用的cache名字
-        $cacheTypeName = Yii::$app->getModule('rbac')->cacheTypeName;
+        $cacheComponents = Yii::$app->getModule('rbac')->cacheComponents;
         $cachekey = 'allowedAccess';
         // 如果使用cache优先从cache读取
         if ($useCache) {
             if (self::$_allowedAccess === null) {
                 $components = Yii::$app->getComponents();
-                if (!in_array($cacheTypeName, array_keys($components))) {
+                if (!in_array($cacheComponents, array_keys($components))) {
                     throw new Exception(Yii::t('rbac',
                         "Modules [rbac] used cache, but application not exists cache component.",
                         array('{extension}' => 'rbac')));
                 }
-                self::$_allowedAccess = Yii::$app->$cacheTypeName->get($cachekey);
+                self::$_allowedAccess = Yii::$app->$cacheComponents->get($cachekey);
             }
         }
         // 如果未使用cache或从cache中未读出值，则到数据库读取，并缓存起来。
@@ -351,7 +351,7 @@ class RbacAuthitems extends ActiveRecord
                 $allowedAccess[$v] = $v;
             }
             self::$_allowedAccess = $allowedAccess;
-            Yii::$app->$cacheTypeName->set($cachekey, $allowedAccess, 0);
+            Yii::$app->$cacheComponents->set($cachekey, $allowedAccess, 0);
         }
 
         return self::$_allowedAccess;

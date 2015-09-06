@@ -25,26 +25,23 @@ $this->params['breadcrumbs'][] = '授权任务管理';
                     'encodeErrorSummary' => false,
                 ]);
                 ?>
-                <table class="table table-bordered table-hover">
-                    <tbody>
-                    <tr data-key="5">
-                        <td>
-                            <?= $form->field($model, 'task_name')->textInput(['maxlength' => 64]); ?>
-                        </td>
-                        <td>
-                            <?= $form->field($model,
-                                'task_category_id')->dropDownList(\bmprbac\rbac\models\RbacTaskCategory::getCategories(),
-                                ['prompt' => '全部类型']); ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <?= Html::submitButton('搜索', ['class' => 'btn btn-default', 'name' => 'submit-button']) ?>
+                <div class="form-group">
+                    <?= $form->field($model, 'task_name')
+                        ->inline()
+                        ->label(false) // 不显示label（input前面的字段名，只使用placeholder来显示字段名）
+                        ->error(false) // 不在input下方显示该field的错误信息（显示错误信息会在input下方增加一个显示错误信息的<p></p>）
+                        ->textInput(['maxlength' => 64, 'placeholder' => $model->getAttributeLabel('task_name')]); ?>
+                </div>
 
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div class="form-group">
+                    <?= $form->field($model, 'task_category_id')
+                        ->inline()
+                        ->label(false)
+                        ->error(false)
+                        ->dropDownList(\bmprbac\rbac\models\RbacTaskCategory::getCategories(),
+                            ['prompt' => '全部类型']); ?>
+                </div>
+                <?= Html::submitButton('搜索', ['class' => 'btn btn-default', 'item_name' => 'submit-button']) ?>
                 <?php ActiveForm::end(); ?>
             </div>
         </div>

@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $model->task_id;
 ?>
 <div class="box box-info">
     <div class="box-body">
-        <div class="col-sm-10">
+        <div class="col-sm-12">
 
             <h3><?= Html::encode('查看任务#' . $model->task_id) ?></h3>
 
@@ -50,23 +50,6 @@ $this->params['breadcrumbs'][] = $model->task_id;
                     ],
                 ]) ?>
             </p>
-        </div>
-        <div class="col-sm-2">
-            <div class="box box-primary">
-                <div class="box-body">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">操作列表</h3>
-                    </div>
-                    <!-- /.box-header -->
-                    <ul>
-                        <li><a href='<?= Yii::$app->urlManager->createUrl(['rbac/authtask/index']); ?>'>任务管理</a></li>
-                        <li><a href='<?= Yii::$app->urlManager->createUrl(['rbac/authtask/create']); ?>'>创建任务</a></li>
-                        <li>
-                            <a href='<?= Yii::$app->urlManager->createUrl(['rbac/authtask/category-admin']); ?>'>任务分类管理</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
         </div>
     </div>
 </div>

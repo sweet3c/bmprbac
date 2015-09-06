@@ -27,21 +27,14 @@ $this->params['breadcrumbs'][] = '任务分类管理';
                     'encodeErrorSummary' => false,
                 ]);
                 ?>
-                <table class="table table-bordered table-hover">
-                    <tbody>
-                    <tr data-key="5">
-                        <td>
-                            <?= $form->field($model, 'task_category_name')->textInput(['maxlength' => 64]); ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <?= Html::submitButton('搜索', ['class' => 'btn btn-default', 'name' => 'submit-button']) ?>
-
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div class="form-group">
+                    <?= $form->field($model, 'task_category_name')
+                        ->inline()
+                        ->label(false) // 不显示label（input前面的字段名，只使用placeholder来显示字段名）
+                        ->error(false) // 不在input下方显示该field的错误信息（显示错误信息会在input下方增加一个显示错误信息的<p></p>）
+                        ->textInput(['maxlength' => 64, 'placeholder' => $model->getAttributeLabel('task_category_name')]); ?>
+                </div>
+                <?= Html::submitButton('搜索', ['class' => 'btn btn-default', 'item_name' => 'submit-button']) ?>
                 <?php ActiveForm::end(); ?>
             </div>
         </div>

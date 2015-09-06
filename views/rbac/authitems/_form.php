@@ -10,7 +10,7 @@ use yii\bootstrap\ActiveForm;
 
 ?>
 
-<div class="col-sm-10">
+<div class="col-sm-12">
 
     <?php $form = ActiveForm::begin([
         'options' => ['class' => 'form-horizontal'],
@@ -40,18 +40,4 @@ use yii\bootstrap\ActiveForm;
 
     <?php ActiveForm::end(); ?>
 
-</div>
-<div class="col-sm-2">
-    <div class="box box-primary">
-        <div class="box-body">
-            <div class="box-header with-border">
-                <h3 class="box-title">操作列表</h3>
-            </div>
-            <!-- /.box-header -->
-            <ul>
-                <li><a href='<?= Yii::$app->urlManager->createUrl(['rbac/authitems/autoscan']); ?>'>扫描权限</a></li>
-                <li><a href='<?= Yii::$app->urlManager->createUrl(['rbac/authitems/check-authitems']); ?>'>检测方法</a></li>
-            </ul>
-        </div>
-    </div>
 </div>
