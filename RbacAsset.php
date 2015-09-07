@@ -23,10 +23,10 @@ class RbacAsset extends AssetBundle
     public $js = [
         'rbac.js',
     ];
-//    public $depends = [
-//        'yii\web\YiiAsset',
-//        'yii\bootstrap\BootstrapAsset',
+    public $depends = [
+        'yii\web\YiiAsset',
+        'yii\bootstrap\BootstrapAsset',
 //        'yii\bootstrap\BootstrapPluginAsset',
 //        'yii\gii\TypeAheadAsset',
-//    ];
+    ];
 }
