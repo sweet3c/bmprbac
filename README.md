@@ -232,3 +232,22 @@ Yii2-rbac is released under the MIT License. See the bundled [LICENSE](LICENSE) 
 ![角色关联用户](http://d.pcs.baidu.com/thumbnail/88e108af983017fdec0cd3555b8ac395?fid=2820402449-250528-670332313679358&time=1441623600&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-6hMlO%2FAw7XD5u6e%2BXt8ZVe00sYg%3D&rt=sh&expires=2h&r=980504874&sharesign=unknown&size=c710_u500&quality=100)
 > **角色授权**
 ![角色授权](http://d.pcs.baidu.com/thumbnail/cd3141fe1258db7e46cc111927d63783?fid=2820402449-250528-1039641705995237&time=1441623600&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-lH39ZA%2FUZivn%2F6vhahv6dF7k%2F8s%3D&rt=sh&expires=2h&r=723916693&sharesign=unknown&size=c710_u500&quality=100)
+***
+> **任务一栏**
+![任务一栏](http://d.pcs.baidu.com/thumbnail/2eae0e248ef99d9f01c247dd4f3ceffe?fid=2820402449-250528-171433254541332&time=1441674000&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-AgvJ%2BBT85IaL8jREgJAF4u%2BFFQ8%3D&rt=sh&expires=2h&r=194807001&sharesign=unknown&size=c710_u500&quality=100)
+> **任务创建**
+![任务创建](http://d.pcs.baidu.com/thumbnail/8f99d127bf0a27a25e712ff025727bdc?fid=2820402449-250528-1087351505794643&time=1441677600&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-ZJg1vMxeHbagz7nZkXqFsgvhBW4%3D&rt=sh&expires=2h&r=865577511&sharesign=unknown&size=c710_u500&quality=100)
+> **任务授权**
+![任务授权](http://d.pcs.baidu.com/thumbnail/e8472902beed35d78433822168c14b33?fid=2820402449-250528-475984466930038&time=1441677600&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-bAU4xlACyRUDT46TUyGeFJT5I80%3D&rt=sh&expires=2h&r=986248858&sharesign=unknown&size=c710_u500&quality=100)
+> **任务关联的角色**
+![任务关联的角色](http://d.pcs.baidu.com/thumbnail/9bcbad7561925eb5dec25d27c6f4dc22?fid=2820402449-250528-710623726275174&time=1441677600&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-4LP9MvKPiJ5kMRxTHYwJ07RjzAU%3D&rt=sh&expires=2h&r=666504869&sharesign=unknown&size=c710_u500&quality=100)
+
+> **授权项目一栏**
+![授权项目一栏](http://d.pcs.baidu.com/thumbnail/54e2afa0f8a4fe08084099f3d3b2ad42?fid=2820402449-250528-666612942975257&time=1441677600&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-otnqo1F%2F%2FHWdVploBYfV%2BQW32QE%3D&rt=sh&expires=2h&r=524828415&sharesign=unknown&size=c710_u500&quality=100)
+> **自动扫描出来的Controller**
+![自动扫描出来的controller](http://d.pcs.baidu.com/thumbnail/a17c83e35e115ac61022a4fef88e1b0b?fid=2820402449-250528-968579193878167&time=1441677600&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-5jWmiKJs8Y5FwZotOb6dUtaWs30%3D&rt=sh&expires=2h&r=571658612&sharesign=unknown&size=c710_u500&quality=100)
+> **扫描Controller下面的所有public方法**
+![扫描Controller下面的所有public方法](http://d.pcs.baidu.com/thumbnail/d514672654739b8dcd31d866be961243?fid=2820402449-250528-1007551648369153&time=1441677600&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-HxQ6pH7G22dp7mDduUgISHLCww4%3D&rt=sh&expires=2h&r=655644178&sharesign=unknown&size=c710_u500&quality=100)
+
+***
+**NOTICE**当然还有很多别的功能，未详细展示，请自行摸索。
