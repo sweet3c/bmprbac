@@ -58,7 +58,6 @@ $this->params['breadcrumbs'][] = '授权角色管理';
                         'role_id',
                         'role_name',
                         'description',
-                        'status',
                         [
                             'label' => '状态',
                             'value' => function ($model) {
