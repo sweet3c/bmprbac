@@ -24,15 +24,15 @@ $this->params['breadcrumbs'][] = $model->role_id;
                     'role_id',
                     'role_name',
                     [
-                        'label' => '角色描述',
+                        'attribute' => 'description',
                         'value' => Html::encode($model->description),
                     ],
                     [
-                        'label' => '状态',
+                        'attribute' => 'status',
                         'value' => isset($model->roleStatusParams[$model->status]) ? $model->roleStatusParams[$model->status] : '',
                     ],
                     [
-                        'label' => '创建时间',
+                        'attribute' => 'create_time',
                         'value' => !empty($model->create_time) ? date("Y-m-d H:i:s", $model->create_time) : '',
                     ],
                 ],
