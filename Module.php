@@ -20,6 +20,12 @@ use yii\filters\AccessControl;
  */
 class Module extends BaseModule
 {
+
+    /**
+     * @inheritdoc
+     */
+    public $controllerNamespace = 'bmprbac\\rbac\controllers';
+
     /** @var bool Whether to show flash messages */
     public $enableFlashMessages = true;
 
