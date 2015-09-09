@@ -224,11 +224,7 @@ class RbacAuthitems extends ActiveRecord
      */
     private static function _extendsBaseController($controller, $module)
     {
-        if ($module == '') {
-            $c = Yii::$app->controllerNamespace . '\\' . basename(str_replace(".php", "", $controller));
-        } else {
-            $c = Yii::$app->getModule($module)->controllerNamespace . "\\" . basename(str_replace(".php", "", $controller));
-        }
+        $c = self::createControllerPath($module, $controller);
         if (!class_exists($c, false)) {
             include_once $controller;
         }
@@ -403,11 +399,7 @@ class RbacAuthitems extends ActiveRecord
             ->from(self::tableName())
             ->all();
         foreach ($rows as $row) {
-            if ($row['module'] == '') {
-                $c = Yii::$app->controllerNamespace . '\\' . basename(str_replace(".php", "", $row['controller']));
-            } else {
-                $c = "bmprbac\\rbac\controllers\\" . basename(str_replace(".php", "", $row['controller']));
-            }
+            $c = self::createControllerPath($row['module'], $row['controller']);
             if (!class_exists($c)) {
                 array_push($notExistAuthitems, $row['item_name']);
             } else {
@@ -419,5 +411,22 @@ class RbacAuthitems extends ActiveRecord
 
         }
         return $notExistAuthitems;
+    }
+
+    /*
+     * 获取Controller的路径
+     * @param $module 模块名称
+     * @param $controller 控制器名称
+     * @author lixupeng
+     * @date 2015-09-09
+     */
+    public static function createControllerPath($module, $controller)
+    {
+        if ($module == '') {
+            $c = Yii::$app->controllerNamespace . '\\' . basename(str_replace(".php", "", $controller));
+        } else {
+            $c = Yii::$app->getModule($module)->controllerNamespace . "\\" . basename(str_replace(".php", "", $controller));
+        }
+        return $c;
     }
 }

@@ -218,11 +218,7 @@ class AuthitemsController extends RbacBaseController
      */
     protected function getPublicActions($controller, $module = '')
     {
-        if ($module == '') {
-            $c = Yii::$app->controllerNamespace . "\\" . basename(str_replace(".php", "", $controller));
-        } else {
-            $c = Yii::$app->getModule($module)->controllerNamespace . "\\" . basename(str_replace(".php", "", $controller));
-        }
+        $c = models\RbacAuthitems::createControllerPath($module, $controller);
         if (!class_exists($c, false)) {
             include_once $controller;
         }
