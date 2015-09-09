@@ -99,16 +99,14 @@ class RbacRole extends ActiveRecord
         return static::findByCondition($condition)->one();
     }
 
-    /*
-     * 角色保存
-     */
-    public function saveRole()
+
+    public function beforeValidate()
     {
+        parent::beforeValidate();
         if ($this->isNewRecord) {
             $this->create_time = time();
-//            $this->status = 1;
         }
-        return $this->save();
+        return true;
     }
 
     /**

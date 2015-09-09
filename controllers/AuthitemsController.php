@@ -221,7 +221,7 @@ class AuthitemsController extends RbacBaseController
         if ($module == '') {
             $c = Yii::$app->controllerNamespace . "\\" . basename(str_replace(".php", "", $controller));
         } else {
-            $c = "bmprbac\\rbac\controllers\\" . basename(str_replace(".php", "", $controller));
+            $c = Yii::$app->getModule($module)->controllerNamespace . "\\" . basename(str_replace(".php", "", $controller));
         }
         if (!class_exists($c, false)) {
             include_once $controller;

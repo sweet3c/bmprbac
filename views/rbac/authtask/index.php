@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = '授权任务管理';
                         'task_id',
                         'task_name',
                         [
-                            'label' => '任务分类',
+                            'attribute' => 'task_category_id',
                             'value' => function ($model) {
                                 return isset(\bmprbac\rbac\models\RbacTaskCategory::getCategories()[$model->task_category_id]) ? \bmprbac\rbac\models\RbacTaskCategory::getCategories()[$model->task_category_id] : '';
                             },

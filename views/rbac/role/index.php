@@ -59,13 +59,13 @@ $this->params['breadcrumbs'][] = '授权角色管理';
                         'role_name',
                         'description',
                         [
-                            'label' => '状态',
+                            'attribute' => 'status',
                             'value' => function ($model) {
                                 return isset($model->roleStatusParams[$model->status]) ? $model->roleStatusParams[$model->status] : '';
                             },
                         ],
                         [
-                            'label' => '创建时间',
+                            'attribute' => 'create_time',
                             'value' => function ($model) {
                                 return date('Y-m-d H:i:s', $model->create_time);
                             },
