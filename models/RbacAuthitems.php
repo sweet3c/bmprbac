@@ -107,6 +107,19 @@ class RbacAuthitems extends ActiveRecord
         ];
     }
 
+    /*
+     * 权限更新后的操作
+     * 主要更新总运行权限的缓存
+     * @author lixupeng
+     * @date 2015-09-09
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        //更新总是允许的缓存
+        self::getAllowedAccess(false);
+        parent::afterSave($insert, $changedAttributes);
+    }
+
     /**
      * 获取所有可授权项目，不包含始终允许的项目
      * @author lixupeng

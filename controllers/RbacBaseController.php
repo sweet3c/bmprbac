@@ -18,9 +18,10 @@ class RbacBaseController extends \yii\web\Controller
         if (!\Yii::$app->getModule('rbac')->rbacCheck) {
             return true;
         }
+
         // 先判断是否为module
-        $mod = $this->module !== null ? $this->module->id . $this->delimeter : "";
-        $access = $mod . $this->id . $this->action->id;
+        $mod = $this->module !== null && $this->module->id != \Yii::$app->id  ? $this->module->id . $this->delimeter : "";
+        $access = $mod . ucfirst($this->id) . $this->action->id;
         // 先检查配置文件中的始终允许(modules配置中的$allowed)，再检查数据库设置中的始终允许
         $alwaysAllowed = \Yii::$app->getModule('rbac')->allowed;
         if ($alwaysAllowed) {
