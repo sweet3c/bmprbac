@@ -29,10 +29,8 @@ class RoleController extends RbacBaseController
 
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->saveRole()) {
-                return $this->redirect(['/rbac/role/view', 'id' => $model->role_id]);
-            }
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['/rbac/role/view', 'id' => $model->role_id]);
         }
         // 验证失败：$errors 是一个包含错误信息的数组
         //$errors = $model->errors;
@@ -53,10 +51,8 @@ class RoleController extends RbacBaseController
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->saveRole()) {
-                return $this->redirect(['/rbac/role/view', 'id' => $model->role_id]);
-            }
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['/rbac/role/view', 'id' => $model->role_id]);
         }
 
         return $this->render('/rbac/role/update', [

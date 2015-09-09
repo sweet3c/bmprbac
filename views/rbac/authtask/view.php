@@ -24,12 +24,12 @@ $this->params['breadcrumbs'][] = $model->task_id;
                     'task_id',
                     'task_name',
                     [
-                        'label' => '任务分类',
+                        'attribute' => 'task_category_id',
                         'value' => isset(\bmprbac\rbac\models\RbacTaskCategory::getCategories()[$model->task_category_id]) ? \bmprbac\rbac\models\RbacTaskCategory::getCategories()[$model->task_category_id] : '',
 
                     ],
                     [
-                        'label' => '角色描述',
+                        'attribute' => 'description',
                         'value' => Html::encode($model->description),
                     ],
 //                    [
