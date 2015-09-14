@@ -45,21 +45,21 @@ class Module extends BaseModule
     public $cacheComponents = 'cache';
     
     /** @inheritdoc */
-//    public function behaviors()
-//    {
-//        return [
-//            'access' => [
-//                'class' => AccessControl::className(),
-//                'rules' => [
-//                    [
-//                        'allow' => true,
-//                        'roles' => ['@'],
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
 //                        'matchCallback' => function () {
 //                            return in_array(Yii::$app->user->identity->username, $this->admins);
 //                        },
-//                    ]
-//                ],
-//            ],
-//        ];
-//    }
+                    ]
+                ],
+            ],
+        ];
+    }
 }
