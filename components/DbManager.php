@@ -18,7 +18,7 @@ use yii\rbac\DbManager as BaseDbManager;
 /**
  * This Auth manager changes visibility and signature of some methods from \yii\rbac\DbManager.
  *
- * @author xupeng Li <740942943@qq.com>
+ * @author Dmitry Erofeev <dmeroff@gmail.com>
  */
 class DbManager extends BaseDbManager implements ManagerInterface
 {
