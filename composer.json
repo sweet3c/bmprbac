@@ -10,9 +10,9 @@
   },
   "authors": [
     {
-      "name": "xupengLi",
-      "email": "740942943@qq.com",
-      "homepage": ""
+      "name": "Dmitry Erofeev",
+      "email": "dmeroff@gmail.com",
+      "homepage": "http://dmeroff.ru"
     }
   ],
   "minimum-stability": "dev",

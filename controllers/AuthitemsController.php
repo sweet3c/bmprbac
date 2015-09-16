@@ -14,9 +14,12 @@ use yii\console\controllers\HelpController;
 use yii\helpers\Inflector;
 use yii\web\Controller;
 use bmprbac\rbac\models;
+use app\common\base\BaseController;
 
-class AuthitemsController extends RbacBaseController
+class AuthitemsController extends BaseController
 {
+
+    public $currentMenu = '/rbac/authitems/index';
 
     /**
      * Updates a particular model.

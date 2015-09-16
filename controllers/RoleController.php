@@ -13,10 +13,13 @@ use yii\base\Exception;
 use yii\helpers\Inflector;
 use yii\web\Controller;
 use bmprbac\rbac\models;
+use app\common\base\BaseController;
 use app\models\user\User;
 
-class RoleController extends RbacBaseController
+class RoleController extends BaseController
 {
+
+    public $currentMenu = '/rbac/role/index';
 
     /**
      * Creates a new model.
