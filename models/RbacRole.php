@@ -173,4 +173,25 @@ class RbacRole extends ActiveRecord
         return false;
     }
 
+    /**
+     * Creates data provider instance with search query applied
+     *
+     * @param array $params
+     *
+     * @return ActiveDataProvider
+     * @author wangyinqia
+     */
+    public static function getAllRole()
+    {
+        $results = self::find()
+            ->select(['role_id','role_name'])->asArray()
+            ->orderBy('role_id ASC')
+            ->all();
+        $roles = [];
+        foreach($results as $value){
+            $roles[$value['role_id']] = $value['role_name'];
+        }
+        return $roles;
+    }
+    
 }

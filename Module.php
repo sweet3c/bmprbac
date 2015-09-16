@@ -16,7 +16,7 @@ use yii\base\Module as BaseModule;
 use yii\filters\AccessControl;
 
 /**
- * @author xupeng Li <740942943@qq.com>
+ * @author Dmitry Erofeev <dmeroff@gmail.com>
  */
 class Module extends BaseModule
 {
@@ -45,21 +45,21 @@ class Module extends BaseModule
     public $cacheComponents = 'cache';
     
     /** @inheritdoc */
-//    public function behaviors()
-//    {
-//        return [
-//            'access' => [
-//                'class' => AccessControl::className(),
-//                'rules' => [
-//                    [
-//                        'allow' => true,
-//                        'roles' => ['@'],
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
 //                        'matchCallback' => function () {
-//                            return in_array(Yii::$app->user->identity->username, $this->admins);
+//                            return in_array(Yii::$app->user->identity->user_id, $this->admins);
 //                        },
-//                    ]
-//                ],
-//            ],
-//        ];
-//    }
+                    ]
+                ],
+            ],
+        ];
+    }
 }

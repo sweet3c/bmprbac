@@ -25,7 +25,7 @@ class RbacBaseController extends \yii\web\Controller
         // 先检查配置文件中的始终允许(modules配置中的$allowed)，再检查数据库设置中的始终允许
         $alwaysAllowed = \Yii::$app->getModule('rbac')->allowed;
         if ($alwaysAllowed) {
-            if (in_array($access, $alwaysAllowed)) {
+            if (in_array(strtolower($access), $alwaysAllowed)) {
                 return true;
             }
         }

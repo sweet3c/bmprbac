@@ -122,10 +122,9 @@ class RbacUserRole extends ActiveRecord
     public static function deleteUserRoles($userId, $roles = array(), $all = false)
     {
         if ($all == true) {
-            $result = self::deleteAll([
-                ['user_id' => ':user_id'],
-                [':user_id' => $userId]
-            ]);
+            $result = self::deleteAll(
+                ['user_id' =>  $userId]
+            );
             if ($result) {
                 //更新用户的角色缓存
                 self::getUserRoles($userId, false);
@@ -148,5 +147,70 @@ class RbacUserRole extends ActiveRecord
                 return false;
             }
         }
+    }
+
+    /**
+     * 增加用户的角色
+     * @param  int     $userId
+     * @param  array   $roles
+     * @return boolean
+     * @author wangyinqia
+     * date 2015-09-16
+     */
+    public static function addUserRoles($userId, $roles)
+    {
+        if (!is_array($roles)) {
+            return false;
+        }
+        $roles = array_filter($roles);
+        if (empty($roles)) {
+            return true;
+        }
+        if (!empty($roles)) {
+            $values = [];
+            foreach ($roles as $roleId) {
+                array_push($values, ['user_id' => $userId, 'role_id' => $roleId]);
+            }
+            $addResult = \Yii::$app->db->createCommand()->batchInsert(self::tableName(),
+                ['user_id', 'role_id'], $values)->execute();
+        }
+
+        return $addResult;
+    }
+
+    /*
+     * 通过用户id获取其所有的角色id并组成串
+     * @param $user_id 用户id
+     * @return string 逗号分隔的role_id串
+     * @author wangyinqia
+     * date 2015-09-16
+     */
+    public function getUserRoleIds($user_id)
+    {
+        $ids = '';
+        $results = self::find()->where(['user_id' => $user_id])->select(['role_id'])->all();
+        foreach ($results as $row) {
+            $ids .= ','.$row['role_id'];
+        }
+
+        return trim($ids, ',');
+    }
+
+    /**
+     * 更新用户的角色关系，要严格按照新旧数组顺序传递参数
+     * @param int   $userId    用户ID
+     * @param array $roles     新的角色ID数组
+     * @param array $old_roles 旧的角色ID数组
+     * @author wangyinqia
+     * date 2015-09-16
+     */
+    public static function updateUserRole($userId, $roles, $old_roles = array())
+    {
+        // 要删除的
+        self::deleteUserRoles($userId, array_diff($old_roles,$roles));
+        // 要添加的
+        self::addUserRoles($userId, array_diff($roles,$old_roles));
+        // 更新缓存
+        self::getUserRoles($userId, false);
     }
 }
