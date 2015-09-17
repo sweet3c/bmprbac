@@ -21,7 +21,7 @@ use yii\base\Widget;
  * This widget may be used in user update form and provides ability to assign
  * multiple auth items to the user.
  * 
- * @author Dmitry Erofeev <dmeroff@gmail.com>
+ * @author xupengLi <740942943@qq.com>
  */
 class Assignments extends Widget
 {
