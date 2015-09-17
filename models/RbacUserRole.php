@@ -213,4 +213,32 @@ class RbacUserRole extends ActiveRecord
         // 更新缓存
         self::getUserRoles($userId, false);
     }
+
+    /**
+     * 根据一个或多个角色id获取角色名字
+     * @author sunzheng
+     */
+    public static function getRoleNamesByIds($ids)
+    {
+        $arr = explode(',', $ids);
+        $searchIds = [];
+        foreach ($arr as $v) {
+            if (is_numeric($v)) {
+                $searchIds[] = $v;
+            }
+        }
+        $data = array();
+        if ($searchIds) {
+            $results = RbacRole::find()
+                ->select(['role_id','role_name'])->asArray()
+                ->where('role_id in ('.implode(',', $searchIds).')')
+                ->orderBy('role_id ASC')
+                ->all();
+
+            foreach ($results as $v) {
+                $data[$v['role_id']] = $v['role_name'];
+            }
+        }
+        return $data;
+    }
 }

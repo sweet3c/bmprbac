@@ -7,13 +7,37 @@
 namespace bmprbac\rbac\controllers;
 
 use bmprbac\rbac\models\RbacAuthitems;
+use yii\filters\AccessControl;
 
 class RbacBaseController extends \yii\web\Controller
 {
     public $delimeter = '@';
 
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@']
+                    ]
+
+                ]
+            ]
+        ];
+    }
+
     public function beforeAction($action)
     {
+        if (!parent::beforeAction($action)) {
+            return false;
+        }
+
         //Allow access when srbac is in debug mode
         if (!\Yii::$app->getModule('rbac')->rbacCheck) {
             return true;
