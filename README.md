@@ -75,6 +75,22 @@ Yii2-rbac is released under the MIT License. See the bundled [LICENSE](LICENSE) 
     ],
 ```    
 >**执行根目录下的RBAC.sql建表,如需修改，可自行修改并修改代码。因为RBAC需要和用户关联，所以需要各位在自己项目的model下面建立User的model，或许由于命名空间的不同，RBAC用户的这块或许有问题，修改下命名空间即可。**
+>**首先你们需要先创建个BaseController来继承RbacBaseController，
+```php
+/**
+ * Created by PhpStorm.
+ * User: lxp
+ * Date: 2015/9/17
+ * Time: 15:03
+ */
+
+namespace app\common\base;
+
+class BaseController extends \bmprbac\rbac\controllers\RbacBaseController
+{
+
+}
+```
 
 ##具体如何使用：
 * **创建角色**
