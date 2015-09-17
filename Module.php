@@ -16,7 +16,7 @@ use yii\base\Module as BaseModule;
 use yii\filters\AccessControl;
 
 /**
- * @author Dmitry Erofeev <dmeroff@gmail.com>
+ * @author xupengLi <740942943@qq.com>
  */
 class Module extends BaseModule
 {

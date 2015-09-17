@@ -260,9 +260,9 @@ class RbacAuthitems extends ActiveRecord
         if (is_array($actions) && count($actions)) {
             $values = [];
             foreach ($actions as $k => $action) {
+                $tempController = preg_replace('/((?<=[a-z])(?=[A-Z]))/', '-', str_replace('Controller', '', $controller));
                 $temp = [
-                    $module ? $module . '@' . str_replace('Controller', '',
-                            $controller) . $action : str_replace('Controller', '', $controller) . $action,
+                    $module ? $module . '@' . $tempController . $action : $tempController . $action,
                     $module,
                     $controller,
                     $action,
