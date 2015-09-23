@@ -181,17 +181,57 @@ class RbacRole extends ActiveRecord
      * @return ActiveDataProvider
      * @author wangyinqia
      */
-    public static function getAllRole()
+    public static function getAllRole($useCache = true)
     {
-        $results = self::find()
-            ->select(['role_id','role_name'])->asArray()
-            ->orderBy('role_id ASC')
-            ->all();
+        $cacheComponents = Yii::$app->getModule('rbac')->cacheComponents;
+        $cacheKey = 'AllRoles';
         $roles = [];
-        foreach($results as $value){
-            $roles[$value['role_id']] = $value['role_name'];
+        // 如果使用cache优先从cache读取
+        if ($useCache) {
+            $roles = Yii::$app->$cacheComponents->get($cacheKey);
         }
+
+        // 如果未使用cache或从cache中未读出值，则到数据库读取，并缓存起来。
+        if (!$useCache || $roles === false) {
+            $results = self::find()
+                ->select(['role_id','role_name'])->asArray()
+                ->orderBy('role_id ASC')
+                ->all();
+            foreach($results as $value){
+                $roles[$value['role_id']] = $value['role_name'];
+            }
+        }
+        Yii::$app->$cacheComponents->set($cacheKey, $roles);
         return $roles;
     }
-    
+
+    /**
+     * 根据角色ID获取角色名称
+     * 参数可以是数组，可以是INT类型。如果参数是数组，则返回数组
+     *
+     * @param int|array $ids
+     * @return array
+     * @author wangyinqia
+     * date 2015-09-22
+     */
+    public static function getRoleNameByIds($ids)
+    {
+        $allRole = self::getAllRole();
+        if (is_array($ids)) {
+            $names = array();
+            foreach ($ids as $v) {
+                if (isset($allRole[$v])) {
+                    $names[$v] = $allRole[$v];
+                }
+            }
+
+            return $names;
+        } else {
+            if (isset($allRole[$ids])) {
+                return $allRole[$ids];
+            } else {
+                return [];
+            }
+        }
+    }
 }
