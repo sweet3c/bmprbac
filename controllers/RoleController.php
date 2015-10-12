@@ -13,10 +13,8 @@ use yii\base\Exception;
 use yii\helpers\Inflector;
 use yii\web\Controller;
 use bmprbac\rbac\models;
-use app\common\base\BaseController;
-use app\models\user\User;
 
-class RoleController extends BaseController
+class RoleController extends RbacBaseController
 {
 
     public $currentMenu = '/rbac/role/index';
@@ -210,7 +208,8 @@ class RoleController extends BaseController
             throw new Exception('角色ID不合法');
         }
         $roleModel = $this->findModel($roleId);
-        $model = new User();
+        $className = Yii::$app->user->identityClass;
+        $model = new $className;
         $dataProvider = $model->search(Yii::$app->request->queryParams);
         $updateParams = Yii::$app->request->post('selection');
         if ($updateParams) {

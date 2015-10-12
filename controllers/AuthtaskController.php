@@ -13,9 +13,8 @@ use yii\base\Exception;
 use yii\helpers\Inflector;
 use yii\web\Controller;
 use bmprbac\rbac\models;
-use app\common\base\BaseController;
 
-class AuthtaskController extends BaseController
+class AuthtaskController extends RbacBaseController
 {
 
     public $currentMenu = '/rbac/authtask/index';
