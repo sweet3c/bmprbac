@@ -423,7 +423,11 @@ class RbacAuthitems extends ActiveRecord
     public static function createControllerPath($module, $controller)
     {
         if ($module == '') {
-            $c = Yii::$app->controllerNamespace . '\\' . basename(str_replace(".php", "", $controller));
+            $controllerPathArray = explode(Yii::$app->controllerNamespace, str_replace("/", "\\", $controller));
+            $controllerPath = ltrim(array_pop($controllerPathArray), '\\');
+            $c = Yii::$app->controllerNamespace ."\\". str_replace(".php", "", $controllerPath);
+
+            //$c = Yii::$app->controllerNamespace . '\\' . basename(str_replace(".php", "", $controller));
         } else {
             $c = Yii::$app->getModule($module)->controllerNamespace . "\\" . basename(str_replace(".php", "", $controller));
         }
