@@ -2,7 +2,6 @@
 
 namespace bmprbac\rbac\models;
 
-use app\models\user\User;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
@@ -56,11 +55,11 @@ class RbacUserRole extends ActiveRecord
     {
         //获取RBAC权限使用的cache名字
         $cacheComponents = Yii::$app->getModule('rbac')->cacheComponents;
-        $cacheKey = 'UserRole_userId_' . $userId;
+        $cachekey = 'UserRole_userId_' . $userId;
         $roles = [];
         // 如果使用cache优先从cache读取
         if ($useCache) {
-            $roles = Yii::$app->$cacheComponents->get($cacheKey);
+            $roles = Yii::$app->$cacheComponents->get($cachekey);
         }
 
         // 如果未使用cache或从cache中未读出值，则到数据库读取，并缓存起来。
@@ -71,8 +70,8 @@ class RbacUserRole extends ActiveRecord
                 ->where('user_id = :user_id', [':user_id' => $userId])
                 ->column();
         }
-        Yii::$app->$cacheComponents->set($cacheKey, $roles);
-        $roles = Yii::$app->$cacheComponents->get($cacheKey);
+        Yii::$app->$cacheComponents->set($cachekey, $roles);
+        $roles = Yii::$app->$cacheComponents->get($cachekey);
         return $roles;
     }
 
@@ -81,7 +80,7 @@ class RbacUserRole extends ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['user_id' => 'user_id'])->onCondition('bmp_user.user_id is not null');
+        return $this->hasOne(Yii::$app->user->identityClass, ['user_id' => 'user_id'])->onCondition('bmp_user.user_id is not null');
     }
 
     /**
@@ -178,6 +177,24 @@ class RbacUserRole extends ActiveRecord
         return $addResult;
     }
 
+    /*
+     * 通过用户id获取其所有的角色id并组成串
+     * @param $user_id 用户id
+     * @return string 逗号分隔的role_id串
+     * @author wangyinqia
+     * date 2015-09-16
+     */
+    public function getUserRoleIds($user_id)
+    {
+        $ids = '';
+        $results = self::find()->where(['user_id' => $user_id])->select(['role_id'])->all();
+        foreach ($results as $row) {
+            $ids .= ','.$row['role_id'];
+        }
+
+        return trim($ids, ',');
+    }
+
     /**
      * 更新用户的角色关系，要严格按照新旧数组顺序传递参数
      * @param int   $userId    用户ID
@@ -194,5 +211,33 @@ class RbacUserRole extends ActiveRecord
         self::addUserRoles($userId, array_diff($roles,$old_roles));
         // 更新缓存
         self::getUserRoles($userId, false);
+    }
+
+    /**
+     * 根据一个或多个角色id获取角色名字
+     * @author sunzheng
+     */
+    public static function getRoleNamesByIds($ids)
+    {
+        $arr = explode(',', $ids);
+        $searchIds = [];
+        foreach ($arr as $v) {
+            if (is_numeric($v)) {
+                $searchIds[] = $v;
+            }
+        }
+        $data = array();
+        if ($searchIds) {
+            $results = RbacRole::find()
+                ->select(['role_id','role_name'])->asArray()
+                ->where('role_id in ('.implode(',', $searchIds).')')
+                ->orderBy('role_id ASC')
+                ->all();
+
+            foreach ($results as $v) {
+                $data[$v['role_id']] = $v['role_name'];
+            }
+        }
+        return $data;
     }
 }
